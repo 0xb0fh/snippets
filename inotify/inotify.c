@@ -15,9 +15,7 @@
 #define LOOP_CONTINUE 1
 #define LOOP_TERMINATE 0
 
-
 unsigned short main_loop;
-
 
 char *ievent_masks[] = 
   {
@@ -34,7 +32,6 @@ char *ievent_masks[] =
     "IN_DELETE_SELF",
     "IN_MOVE_SELF",
   };
-
 
 int get_in_events(int fd)
 {
@@ -55,7 +52,7 @@ int get_in_events(int fd)
 	      event->cookie, event->len);
     
     if (event->len)
-      printf ("name=%s\n", event->name);
+      debug_log("name=%s\n", event->name);
     
     next_evt += EVENT_SIZE + event->len;
   }
@@ -131,8 +128,8 @@ int main (int argc, char **argv)
      "This is because non-job-control shells often ignore certain signals when starting children, 
      and it is important for the children to respect this."
   */
-  if (signal (SIGINT, signal_hl) == SIG_IGN){
-    signal (SIGINT, SIG_IGN);
+  if (signal(SIGINT, signal_hl) == SIG_IGN){
+    signal(SIGINT, SIG_IGN);
     debug_log("Signal SIGINT previously ignored, ignoring...\n");
   }
 
@@ -140,7 +137,6 @@ int main (int argc, char **argv)
   
   if (fd < 0)
     fatal("Error while initializing::FD=%d\n",fd);
-  
 
   wd = add_to_watch(fd, argv[1], IN_ALL_EVENTS/*IN_MODIFY | IN_CREATE | IN_DELETE*/);
   check_in_events(fd);
