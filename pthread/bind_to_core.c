@@ -25,19 +25,12 @@
 
 int bind_to_core(int core_id) 
 {
-   int num_cores;
    cpu_set_t cpuset;
 
-   num_cores = sysconf(_SC_NPROCESSORS_ONLN);
-
-   if (core_id >= num_cores) 
-      return EINVAL;
-   
    CPU_ZERO(&cpuset);
    CPU_SET(core_id, &cpuset);
-
-   pthread_t current_thread = pthread_self();    
-   return pthread_setaffinity_np(current_thread, sizeof(cpu_set_t), &cpuset);
+    
+   return pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset);
 }
 
 void *thread_func(void *parms)
