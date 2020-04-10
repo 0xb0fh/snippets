@@ -38,7 +38,7 @@ static int __init kprobe_init(void)
 		return -1;
 	}
 
-	pr_debug("Planted return probe at %s: %p\n", icmp_kprobe.symbol_name,
+	pr_debug("Planted kprobe at %s: %p\n", icmp_kprobe.symbol_name,
 			 icmp_kprobe.addr);
 
 	return 0;
